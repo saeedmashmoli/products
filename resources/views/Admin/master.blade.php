@@ -7,11 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title >{{config('app.name')}}</title>
     <link rel="icon" type="image/png" href="{{asset('cnc-favicon.png')}}">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('packageSource/plyr-master/dist/plyr.css')}}">
     <script src="{{asset('packageSource/plyr-master/dist/plyr.min.js')}}"></script>
-    <script src="/packageSource/sweetalert2/sweetalert2.min.js"></script>
-    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="{{asset('packageSource/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 
 </head>
 <body class="body">
@@ -24,14 +24,14 @@
 
 </div>
 
-<script src="/packageSource/jquery.js"></script>
+<script src="{{asset('packageSource/jquery.js')}}"></script>
 
 <script>
     window.Laravel = {};
-    window.Laravel.Auth = '{{ Auth::check() }}' == '' ? false : true;
-    window.Laravel.csrfToken = '{{ csrf_token() }}'
+    window.Laravel.authUser = '{!! json_encode(auth()->user()) !!}';
+    window.Laravel.projectName = '{{env('APP_NAME')}}'
 </script>
-<script src="/js/app.js"></script>
+<script src="{{asset('js/app.js')}}"></script>
 
 <script>
     const swalWithBootstrapButtons = Swal.mixin({

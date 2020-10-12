@@ -8,9 +8,12 @@ const store = new Vuex.Store({
         article: {},
         video : {},
         user : {},
+        chatId : 0,
+        chats : [],
         galleries : [],
         products : [],
         articles : [],
+        messages : [],
         videos : [],
         comments : [],
         selectCommentId : 0,
@@ -22,6 +25,26 @@ const store = new Vuex.Store({
 
     },
     mutations : {
+        changeChatsSeen(state , chatId){
+            let chat = state.chats.filter( c => c.id === chatId).shift();
+                chat.unread_messages_count = 0;
+        },
+        changeChats(state , newChats){
+            state.chats = newChats;
+        },
+        changeChatId(state , newChatId){
+            state.chatId = newChatId;
+        },
+        addToMessages(state , newMessage){
+            if (!state.messages){
+                state.messages = [newMessage]
+            }else{
+                state.messages.push(newMessage);
+            }
+        },
+        changeMessages(state , newMessages){
+            state.messages = newMessages
+        },
         changeProduct(state , newProduct){
             state.product = newProduct
         },

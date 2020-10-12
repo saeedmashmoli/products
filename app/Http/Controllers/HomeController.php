@@ -7,7 +7,12 @@ use App\Article;
 use App\Articlelike;
 use App\Articleview;
 use App\Category;
+use App\Chat;
 use App\Comment;
+use App\Events\SendMessage;
+use App\Events\SendMessageEvent;
+use App\Events\SentMessageEvent;
+use App\Message;
 use App\Product;
 use App\Productlike;
 use App\Productview;
@@ -167,5 +172,36 @@ class HomeController extends Controller
         }
         $product = Product::whereId($request->product_id)->with('galleries')->first();
         return $product;
+    }
+    public function getChat(){
+        $user = auth()->user();
+        $chat = Chat::whereUserId($user->id)->first();
+        if ($chat){
+            return $chat;
+        }else {
+            return null;
+        }
+    }
+    public function sendMessage(Request $request){
+        $user = auth()->user();
+        if ($request->chatId > 0){
+            $chat = Chat::whereId($request->chatId)->first();
+        }else{
+           $chat = Chat::create(['user_id' => $user->id]);
+        }
+        if ($request->file('file')){
+            $result = $this->saveFile($request,$chat->id,'chats','file');
+            $url = $result['path'];
+        }else{
+            $url = null;
+        }
+        $message = Message::create([
+            'chat_id' => $chat->id,
+            'user_id' => $user->id ,
+            'text' => $request->text ,
+            'url' => $url
+        ]);
+        event(new SentMessageEvent());
+        return $message;
     }
 }

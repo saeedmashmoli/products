@@ -1,5 +1,8 @@
 @import "./fontiran.css";
 @media screen and (max-width: 768px) {
+    .page-wrapper .page-content > div{
+        padding: 20px 5px !important;
+    }
     .vjs_video_3-dimensions{
         width : 100% !important;
         height : 165px !important;

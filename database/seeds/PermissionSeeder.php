@@ -19,7 +19,8 @@ class PermissionSeeder extends Seeder
             ['title' => 'show-articles','label' => 'مدیریت مقالات','created_at' => \Carbon\Carbon::now()],
             ['title' => 'show-products','label' => 'مدیریت محصولات','created_at' => \Carbon\Carbon::now()],
             ['title' => 'show-videos','label' => 'مدیریت ویدئوها','created_at' => \Carbon\Carbon::now()],
-            ['title' => 'show-comments','label' => 'مدیریت کامنت ها','created_at' => \Carbon\Carbon::now()]
+            ['title' => 'show-comments','label' => 'مدیریت کامنت ها','created_at' => \Carbon\Carbon::now()],
+            ['title' => 'show-chats','label' => 'مدیریت چت هاا','created_at' => \Carbon\Carbon::now()]
         ];
         $permissionRoles = [
             ['role_id' => 1 , 'permission_id' => 1],
@@ -29,6 +30,7 @@ class PermissionSeeder extends Seeder
             ['role_id' => 1 , 'permission_id' => 5],
             ['role_id' => 1 , 'permission_id' => 6],
             ['role_id' => 1 , 'permission_id' => 7],
+            ['role_id' => 1 , 'permission_id' => 8],
         ];
         DB::table('permissions')->insert($permissions) ;
         DB::table('permission_role')->insert($permissionRoles) ;

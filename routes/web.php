@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/migrate',function(){
-    \Illuminate\Support\Facades\Artisan::call('config:clear');
+Route::get('/test',function(){
+    $result = broadcast(new \App\Events\SentMessageEvent());
+//    dd($result);
 });
 
 Route::get('/', function () {
+
     return view('home');
 })->name('/');
 Route::post('checkLogin','LoginController@checkLogin')->name('checkLogin');
@@ -41,7 +44,10 @@ Route::post('searchResult' , 'HomeController@searchResult');
 Route::post('getComments' , 'HomeController@comments');
 
 Route::group(['middleware'=>['auth:web']],function (){
+
     Route::post('sendComment','HomeController@sendComment')->name('sendComment');
+    Route::post('getChat','HomeController@getChat')->name('getChat');
+    Route::post('sendMessage','HomeController@sendMessage')->name('sendMessage');
     Route::get('panel', 'PanelController@index')->name('panel');
     Route::get('profile','PanelController@profile')->name('profile.show');
     Route::post('profile','PanelController@update')->name('profile.update');
@@ -77,5 +83,11 @@ Route::group(['namespace' => 'Admin' ,'middleware'=>['auth:web'], 'prefix' => 'a
     Route::group([ 'middleware' => ['can:show-comments']], function () {
         Route::resource('comments', 'CommentController');
         Route::post('submitCommentStatus' , 'CommentController@commentStatus')->name('comment.status');
+    });
+    Route::group([ 'middleware' => ['can:show-chats']], function () {
+        Route::resource('chats', 'ChatController');
+        Route::get('getChats' , 'ChatController@chats')->name('getChats');
+        Route::post('getChat' , 'ChatController@getChat')->name('getChat');
+        Route::post('sendMessageByAdmin' , 'ChatController@sendMessage')->name('sendMessageByAdmin');
     });
 });

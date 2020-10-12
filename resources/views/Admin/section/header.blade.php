@@ -161,6 +161,14 @@
                             </a>
                         </li>
                     @endcan
+                    @can('show-chats')
+                        <li class="sidebar-dropdown">
+                            <a class="@if(Route::currentRouteName()=='chats.index') active @endif" href="{{route('chats.index')}}">
+                                <i class="fa fa-comment"></i>
+                                <span>چت ها</span>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </div>
             <!-- sidebar-menu  -->
